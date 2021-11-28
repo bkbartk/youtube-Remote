@@ -54,7 +54,7 @@ class YouTubeRemoteControl extends LitElement {
                   `}
 
                   <div class="grid-container-volume-channel-control" >
-                      <input type="text" id="keypadinput" class="btn-flat flat-high ripple" style="margin-top: 0px; height: 50%;" placholder="Search..." onkeypress="SendKey(event)">
+                      <input type="text" id="keypadinput" class="btn-flat flat-high ripple" style="margin-top: 0px; height: 50%;" placholder="Search..." onkeypress="${() => this._sendKey(event)}>">
                   </div>
 
 <!-- ################################# MEDIA CONTROL ################################# -->
@@ -68,16 +68,14 @@ class YouTubeRemoteControl extends LitElement {
                 `}
                 </div>
               </div>
-              <script>
-              SendKey(e) {
-                var key = String.fromCharCode(e.which).toLowerCase();
-                document.getElementById("keypadinput").value = "";
-                    ${() => this._remote_key_press(key)}
-                }
-              </script>
             `;
     }
 
+    _sendKey(e) {
+        var key = String.fromCharCode(e.which).toLowerCase();
+        document.getElementById("keypadinput").value = "";
+            this._remote_key_press(key);
+        }
 
     _remote_key_press(key) {
         this.hass.callService("shell_command", "youtube_key", {
@@ -577,18 +575,11 @@ class YouTubeRemoteControl extends LitElement {
            // border: solid 2px var(--backgroundcolor
       }
 
-      ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+      input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
         color: white;
         opacity: 1; /* Firefox */
       }
       
-      :-ms-input-placeholder { /* Internet Explorer 10-11 */
-        color: white;
-      }
-      
-      ::-ms-input-placeholder { /* Microsoft Edge */
-        color: white;
-      }
   `;
     }
 
