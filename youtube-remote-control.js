@@ -73,7 +73,7 @@ class YouTubeRemoteControl extends LitElement {
 
     _sendKey() {
         // var key = String.fromCharCode(e.which).toLowerCase();
-        var key = 'key';
+        var key = 't';
         document.getElementById("keypadinput").value = "";
             this._remote_key_press(key);
         }
