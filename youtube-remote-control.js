@@ -22,7 +22,6 @@ class YouTubeRemoteControl extends LitElement {
     }
 
     render() {
-        const stateObj = this.hass.states[this.config.entity];
         const volumeStateObj = this.hass.states[this.config.volumeEntity];
 
         const borderWidth = this.config.dimensions && this.config.dimensions.border_width ? this.config.dimensions.border_width : "1px";
@@ -106,9 +105,9 @@ class YouTubeRemoteControl extends LitElement {
 
 <!-- ################################# MEDIA CONTROL ################################# -->
                  <div class="grid-container-media-control" >
-                      <button class="btn-flat flat-low ripple"  @click=${() => this._media_player_service("arris_dcx960","rewind")}><ha-icon icon="mdi:skip-backward"/></button>
-                      <button class="btn-flat flat-low ripple"  @click=${() => this._media_player_service("media_player",stateObj.state === 'playing'  ? 'media_pause' : 'media_play')}><ha-icon icon="mdi:${stateObj.state === 'playing'  ? 'pause' : 'play'}"/></button>
-                      <button class="btn-flat flat-low ripple"  @click=${() => this._media_player_service("arris_dcx960","fast_forward")}><ha-icon icon="mdi:skip-forward"/></button>
+                      <button class="btn-flat flat-low ripple"  @click=${() => this._remote_key_press("Left")}><ha-icon icon="mdi:skip-backward"/></button>
+                      <button class="btn-flat flat-low ripple"  @click=${() => this._remote_key_press("KP_Space")}><ha-icon icon="mdi:play-pause"/></button>
+                      <button class="btn-flat flat-low ripple"  @click=${() => this._remote_key_press("Right")}><ha-icon icon="mdi:skip-forward"/></button>
                   </div> 
 <!-- ################################# MEDIA CONTROL END ################################# -->
                   </div>
