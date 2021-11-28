@@ -20,8 +20,6 @@ class YouTubeRemoteControl extends LitElement {
     }
 
     render() {
-        const volumeStateObj = this.hass.states[this.config.volumeEntity];
-
         const borderWidth = this.config.dimensions && this.config.dimensions.border_width ? this.config.dimensions.border_width : "1px";
         const scale = this.config.dimensions && this.config.dimensions.scale ? this.config.dimensions.scale : 1;
         const remoteWidth = Math.round(scale * 260) + "px";
@@ -56,7 +54,7 @@ class YouTubeRemoteControl extends LitElement {
                   `}
 
                   <div class="grid-container-volume-channel-control" >
-                      <input type="text" class="btn-flat flat-high ripple" style="margin-top: 0px; height: 50%;" placholder="Search..." onkeypress="SendKey(event)">
+                      <input type="text" id="keypadinput" class="btn-flat flat-high ripple" style="margin-top: 0px; height: 50%;" placholder="Search..." onkeypress="SendKey(event)">
                   </div>
 
 <!-- ################################# MEDIA CONTROL ################################# -->
@@ -70,14 +68,16 @@ class YouTubeRemoteControl extends LitElement {
                 `}
                 </div>
               </div>
+              <script>
+              SendKey(e) {
+                var key = String.fromCharCode(e.which).toLowerCase();
+                document.getElementById("keypadinput").value = "";
+                    ${() => this._remote_key_press(key)}
+                }
+              </script>
             `;
     }
 
-    SendKey(e) {
-        var key = String.fromCharCode(e.which).toLowerCase();
-        _remote_key_press(key)
-    }
-    
 
     _remote_key_press(key) {
         this.hass.callService("shell_command", "youtube_key", {
@@ -575,6 +575,19 @@ class YouTubeRemoteControl extends LitElement {
            height:100%;
            font-size: calc(var(--remotewidth) / 16.6);
            // border: solid 2px var(--backgroundcolor
+      }
+
+      ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: white;
+        opacity: 1; /* Firefox */
+      }
+      
+      :-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color: white;
+      }
+      
+      ::-ms-input-placeholder { /* Microsoft Edge */
+        color: white;
       }
   `;
     }
