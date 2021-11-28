@@ -9,8 +9,7 @@ class YouTubeRemoteControl extends LitElement {
             hass: {},
             config: {},
             _show_inputs: {},
-            _show_text: {},
-            _show_keypad: {}
+            _show_text: {}
         };
     }
 
@@ -18,7 +17,6 @@ class YouTubeRemoteControl extends LitElement {
         super();
         this._show_inputs = false;
         this._show_text = false;
-        this._show_keypad = false;
     }
 
     render() {
@@ -40,46 +38,15 @@ class YouTubeRemoteControl extends LitElement {
                       <button class="btn ripple" @click=${() => this._media_player_service("media_player","toggle")}><ha-icon icon="mdi:power" style="color: red;"/></button>
                   </div> 
                  ${this._show_inputs ? html`
-<!-- ################################# SOURCES ################################# -->
-                  <div class="grid-container-input">
-                  <div class="shape-input">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 130"><path d="m 187 43 a 30 30 0 0 0 60 0 a 30 30 0 0 0 -60 0 M 148 12 a 30 30 0 0 1 30 30 a 40 40 0 0 0 40 40 a 30 30 0 0 1 30 30 v 18 h -236 v -88 a 30 30 0 0 1 30 -30" fill="var(--remote-button-color)" stroke="#000000" stroke-width="0" /></svg>
-                   </div>   
-                    <button class="ripple bnt-input-back" @click=${() => this._show_inputs = false}><ha-icon icon="mdi:undo-variant"/></button>
-                    <p class="source_text"><b>SOURCE</b></p>
-                  <div class="grid-item-input">
-                    ${stateObj.attributes.source_list.map(source => html`
-                    <button class="${stateObj.attributes.source === source ? 'btn-input-on' : 'btn-input  ripple overlay'}" @click=${() => {
-                        this._select_source(source);
-                        this._show_inputs = false;
-                    }}>${source}</button>
-                    `)}
-                  </div>
-<!-- ################################# SOURCES END ################################# -->
                  ` : html`
                     ${this._show_keypad ? html`
-<!-- ################################ keypad ################################## -->
-                    <div class="grid-container-keypad">
-                        <button class="btn-keypad ripple" @click=${() => this._remote_key_press("arris_dcx960","1")}>1</button>
-                        <button class="btn-keypad ripple" @click=${() => this._remote_key_press("arris_dcx960","2")}>2</button>
-                        <button class="btn-keypad ripple" @click=${() => this._remote_key_press("arris_dcx960","3")}>3</button>
-                        <button class="btn-keypad ripple" @click=${() => this._remote_key_press("arris_dcx960","4")}>4</button>
-                        <button class="btn-keypad ripple" @click=${() => this._remote_key_press("arris_dcx960","5")}>5</button>
-                        <button class="btn-keypad ripple" @click=${() => this._remote_key_press("arris_dcx960","6")}>6</button>
-                        <button class="btn-keypad ripple" @click=${() => this._remote_key_press("arris_dcx960","7")}>7</button>
-                        <button class="btn-keypad ripple" @click=${() => this._remote_key_press("arris_dcx960","8")}>8</button>
-                        <button class="btn-keypad ripple" @click=${() => this._remote_key_press("arris_dcx960","9")}>9</button>
-                        <button class="btn-keypad"></button>
-                        <button class="btn-keypad ripple" @click=${() => this._remote_key_press("arris_dcx960","0")}>0</button>
-                        <button class="btn-keypad"></button>
-                  </div>
-  <!-- ################################# keypad end ############################## --> 
                  ` : html`
 <!-- ################################# DIRECTION PAD ################################# -->
                   <div class="grid-container-cursor">
                   <div class="shape">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 79"><path d="m 30 15 a 10 10 0 0 1 20 0 a 15 15 0 0 0 15 15 a 10 10 0 0 1 0 20 a 15 15 0 0 0 -15 15 a 10 10 0 0 1 -20 0 a 15 15 0 0 0 -15 -15 a 10 10 0 0 1 0 -20 a 15 15 0 0 0 15 -15" fill="var(--remote-button-color)" stroke="#000000" stroke-width="0" /></svg>
                     </div> 
+                      <button class="btn ripple item_sound" @click=${() => this._media_player_service("media_player","toggle")}><ha-icon icon="mdi:power" style="color: red;"/></button>
                       <button class="btn ripple item_up" style="background-color: transparent;" @click=${() => this._remote_key_press("Up")}><ha-icon icon="mdi:chevron-up"/></button>
                       <button class="btn ripple item_2_sx" style="background-color: transparent;" @click=${() => this._remote_key_press("Left")}><ha-icon icon="mdi:chevron-left"/></button>
                       <button class="btn bnt_ok ripple item_2_c" style="border: solid 2px ${backgroundColor}"  @click=${() => this._remote_key_press("KP_Enter")}>OK</button>
@@ -94,19 +61,16 @@ class YouTubeRemoteControl extends LitElement {
                   <div class="grid-container-volume-channel-control" >
                       <button class="btn ripple"  style="border-radius: 50% 50% 0px 0px; margin: 0px auto 0px auto; height: 100%;" @click=${() => this._volume_media_player_service("volume_up")}><ha-icon icon="mdi:plus"/></button>
                       <button class="btn-flat flat-high ripple" style="margin-top: 0px; height: 50%;" @click=${() => this._remote_key_press("arris_dcx960","MediaTopMenu")}><ha-icon icon="mdi:home"></button>
-                      <button class="btn ripple" style="border-radius: 50% 50% 0px 0px; margin: 0px auto 0px auto; height: 100%;" @click=${() => this._remote_key_press("arris_dcx960","ChannelUp")}><ha-icon icon="mdi:chevron-up"/></button>
                       <button class="btn" style="border-radius: 0px; cursor: default; margin: 0px auto 0px auto; height: 100%;"><ha-icon icon="${volumeStateObj.attributes.is_volume_muted === true ? 'mdi:volume-off' : 'mdi:volume-high'}"/></button>
                       <button class="btn ripple" Style="color:${volumeStateObj.attributes.is_volume_muted === true ? 'red' : ''}; height: 100%;"" @click=${() => this._volume_button("MUTE")}><span class="${volumeStateObj.attributes.is_volume_muted === true ? 'blink' : ''}"><ha-icon icon="mdi:volume-mute"></span></button>
-                      <button class="btn" style="border-radius: 0px; cursor: default; margin: 0px auto 0px auto; height: 100%;"><ha-icon icon="mdi:parking"/></button>
                       <button class="btn ripple" style="border-radius: 0px 0px 50% 50%;  margin: 0px auto 0px auto; height: 100%;" @click=${() => this._volume_media_player_service("volume_down")}><ha-icon icon="mdi:minus"/></button>
                       <button class="btn-flat flat-low ripple" style="color: red;" @click=${() => this._media_player_service("arris_dcx960","record")}><ha-icon icon="mdi:record"/></button>
-                      <button class="btn ripple" style="border-radius: 0px 0px 50% 50%;  margin: 0px auto 0px auto; height: 100%;"  @click=${() => this._remote_key_press("arris_dcx960","ChannelDown")}><ha-icon icon="mdi:chevron-down"/></button>
                   </div>
 
 <!-- ################################# MEDIA CONTROL ################################# -->
                  <div class="grid-container-media-control" >
                       <button class="btn-flat flat-low ripple"  @click=${() => this._remote_key_press("Left")}><ha-icon icon="mdi:skip-backward"/></button>
-                      <button class="btn-flat flat-low ripple"  @click=${() => this._remote_key_press("KP_Space")}><ha-icon icon="mdi:play-pause"/></button>
+                      <button class="btn-flat flat-low ripple"  @click=${() => this._remote_key_press("space")}><ha-icon icon="mdi:play-pause"/></button>
                       <button class="btn-flat flat-low ripple"  @click=${() => this._remote_key_press("Right")}><ha-icon icon="mdi:skip-forward"/></button>
                   </div> 
 <!-- ################################# MEDIA CONTROL END ################################# -->
