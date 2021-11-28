@@ -34,9 +34,6 @@ class YouTubeRemoteControl extends LitElement {
         return html`
             <div class="card">
             <div class="page" style="--remote-button-color: ${buttonColor}; --remote-text-color: ${textColor}; --remote-color: ${backgroundColor}; --remotewidth: ${remoteWidth};  --main-border-color: ${borderColor}; --main-border-width: ${borderWidth}">
-                  <div class="grid-container-power"  style="--remotewidth: ${remoteWidth}">
-                      <button class="btn ripple" @click=${() => this._media_player_service("media_player","toggle")}><ha-icon icon="mdi:power" style="color: red;"/></button>
-                  </div> 
                  ${this._show_inputs ? html`
                  ` : html`
                     ${this._show_keypad ? html`
@@ -59,12 +56,7 @@ class YouTubeRemoteControl extends LitElement {
                   `}
 
                   <div class="grid-container-volume-channel-control" >
-                      <button class="btn ripple"  style="border-radius: 50% 50% 0px 0px; margin: 0px auto 0px auto; height: 100%;" @click=${() => this._volume_media_player_service("volume_up")}><ha-icon icon="mdi:plus"/></button>
-                      <button class="btn-flat flat-high ripple" style="margin-top: 0px; height: 50%;" @click=${() => this._remote_key_press("arris_dcx960","MediaTopMenu")}><ha-icon icon="mdi:home"></button>
-                      <button class="btn" style="border-radius: 0px; cursor: default; margin: 0px auto 0px auto; height: 100%;"><ha-icon icon="${volumeStateObj.attributes.is_volume_muted === true ? 'mdi:volume-off' : 'mdi:volume-high'}"/></button>
-                      <button class="btn ripple" Style="color:${volumeStateObj.attributes.is_volume_muted === true ? 'red' : ''}; height: 100%;"" @click=${() => this._volume_button("MUTE")}><span class="${volumeStateObj.attributes.is_volume_muted === true ? 'blink' : ''}"><ha-icon icon="mdi:volume-mute"></span></button>
-                      <button class="btn ripple" style="border-radius: 0px 0px 50% 50%;  margin: 0px auto 0px auto; height: 100%;" @click=${() => this._volume_media_player_service("volume_down")}><ha-icon icon="mdi:minus"/></button>
-                      <button class="btn-flat flat-low ripple" style="color: red;" @click=${() => this._media_player_service("arris_dcx960","record")}><ha-icon icon="mdi:record"/></button>
+                      <input type="text" class="btn-flat flat-high ripple" style="margin-top: 0px; height: 50%;" placholder="Search..." onkeypress="SendKey(event)">
                   </div>
 
 <!-- ################################# MEDIA CONTROL ################################# -->
@@ -81,20 +73,11 @@ class YouTubeRemoteControl extends LitElement {
             `;
     }
 
-    _button(type,button) {
-        this.hass.callService(type, "button", {
-            entity_id: this.config.entity,
-            button: button
-        });
+    SendKey(e) {
+        var key = String.fromCharCode(e.which).toLowerCase();
+        _remote_key_press(key)
     }
     
-    _volume_button(button) {
-        this.hass.callService(this.config.volumeService, "button", {
-            entity_id: this.config.volumeEntity,
-            button: button
-        });
-    }
-
 
     _remote_key_press(key) {
         this.hass.callService("shell_command", "youtube_key", {
