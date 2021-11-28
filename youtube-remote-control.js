@@ -32,10 +32,6 @@ class YouTubeRemoteControl extends LitElement {
         return html`
             <div class="card">
             <div class="page" style="--remote-button-color: ${buttonColor}; --remote-text-color: ${textColor}; --remote-color: ${backgroundColor}; --remotewidth: ${remoteWidth};  --main-border-color: ${borderColor}; --main-border-width: ${borderWidth}">
-                 ${this._show_inputs ? html`
-                 ` : html`
-                    ${this._show_keypad ? html`
-                 ` : html`
 <!-- ################################# DIRECTION PAD ################################# -->
                   <div class="grid-container-cursor">
                   <div class="shape">
@@ -50,11 +46,9 @@ class YouTubeRemoteControl extends LitElement {
                       <button class="btn ripple item_down" style="background-color: transparent;" @click=${() => this._remote_key_press("Down")}><ha-icon icon="mdi:chevron-down"/></button>
                     </div>
 <!-- ################################# DIRECTION PAD END ################################# -->
-                
-                  `}
 
                   <div class="grid-container-volume-channel-control" >
-                      <input type="text" id="keypadinput" class="btn-flat flat-high ripple" style="margin-top: 0px; height: 50%;border: 2px solid white;" placeholder="Search..." @on-change="valueChanged" @keydown="${() => this._sendKey()}>">
+                      <input type="text" id="keypadinput" class="btn-flat flat-high ripple" style="margin-top: 0px; height: 50%;border: 2px solid white;" placeholder="Search..." @change="${() => this._sendKey()}>">
                   </div>
 
 <!-- ################################# MEDIA CONTROL ################################# -->
@@ -65,18 +59,11 @@ class YouTubeRemoteControl extends LitElement {
                   </div> 
 <!-- ################################# MEDIA CONTROL END ################################# -->
                   </div>
-                `}
+
                 </div>
               </div>
             `;
     }
-
-    valueChanged(ev) {
-        const newValue = this.$.textinput.value;
-        var key = 'x';
-        document.getElementById("keypadinput").value = "";
-        this._remote_key_press(key);
-      }
 
     _sendKey() {
         // var key = String.fromCharCode(e.which).toLowerCase();
