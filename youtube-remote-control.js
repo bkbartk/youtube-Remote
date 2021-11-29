@@ -64,14 +64,14 @@ class YouTubeRemoteControl extends LitElement {
             `;
     }
 
-    _send_key(key) {
-        this._remote_key_press(key);
-    }
-
     _remote_key_press(key) {
         this.hass.callService("shell_command", "youtube_key", {
             key: key
         });
+    }
+    
+    _send_key(key) {
+        this._remote_key_press(key);
     }
 
     _toggle() {
