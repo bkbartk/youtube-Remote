@@ -48,7 +48,7 @@ class YouTubeRemoteControl extends LitElement {
 <!-- ################################# DIRECTION PAD END ################################# -->
 
                   <div class="grid-container-volume-channel-control" >
-                      <paper-input class="btn-flat flat-high ripple" style="margin-top: 0px; height: 50%;border: 2px solid white;" placeholder="Search4..." @keydown="${() => this._send_key(KeyboardEvent)}"></paper-input>
+                      <paper-input class="btn-flat flat-high ripple" style="margin-top: 0px; height: 50%;border: 2px solid white;" placeholder="Search4..." @keydown="${() => this._send_key(Event)}"></paper-input>
                   </div>
 
 <!-- ################################# MEDIA CONTROL ################################# -->
