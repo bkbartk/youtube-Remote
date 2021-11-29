@@ -37,7 +37,7 @@ class YouTubeRemoteControl extends LitElement {
                   <div class="shape">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 79"><path d="m 30 15 a 10 10 0 0 1 20 0 a 15 15 0 0 0 15 15 a 10 10 0 0 1 0 20 a 15 15 0 0 0 -15 15 a 10 10 0 0 1 -20 0 a 15 15 0 0 0 -15 -15 a 10 10 0 0 1 0 -20 a 15 15 0 0 0 15 -15" fill="var(--remote-button-color)" stroke="#000000" stroke-width="0" /></svg>
                     </div> 
-                      <button class="btn ripple item_sound" @click=${() => this._media_player_service("media_player","toggle")}><ha-icon icon="mdi:power" style="color: red;"/></button>
+                      <button class="btn ripple item_sound" @click=${() => this._toggle()}><ha-icon icon="mdi:power" style="color: red;"/></button>
                       <button class="btn ripple item_up" style="background-color: transparent;" @click=${() => this._remote_key_press("Up")}><ha-icon icon="mdi:chevron-up"/></button>
                       <button class="btn ripple item_2_sx" style="background-color: transparent;" @click=${() => this._remote_key_press("Left")}><ha-icon icon="mdi:chevron-left"/></button>
                       <button class="btn bnt_ok ripple item_2_c" style="border: solid 2px ${backgroundColor}"  @click=${() => this._remote_key_press("KP_Enter")}>OK</button>
@@ -70,11 +70,16 @@ class YouTubeRemoteControl extends LitElement {
         document.getElementById("keypadinput").value = "";
         this._remote_key_press(key);
     }
+   
 
     _remote_key_press(key) {
         this.hass.callService("shell_command", "youtube_key", {
             key: key
         });
+    }
+
+    _toggle() {
+        this.hass.callService("script", "toggle_youtube_gracefully");
     }
 
     _media_player_service(type,service) {
@@ -89,12 +94,6 @@ class YouTubeRemoteControl extends LitElement {
         });
     }
 
-    _select_source(source) {
-        this.hass.callService("media_player", "select_source", {
-            entity_id: this.config.entity,
-            source: source
-        });
-    }
 
     setConfig(config) {
         if (!config.entity) {
