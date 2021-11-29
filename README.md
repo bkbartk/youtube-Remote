@@ -44,6 +44,39 @@ in your configuation.yaml add something like this
 ```yaml
 shell_command:
   youtube_key: "ssh -i /config/.ssh/id_rsa -o 'StrictHostKeyChecking=no' <user>@<ip address>  'export DISPLAY=:0 && xdotool key --window \"$(xdotool search --class Chromium1 | head -1)\" {{key}}'"
+  youtube_off: "ssh -i /config/.ssh/id_rsa -o 'StrictHostKeyChecking=no' <user>@<ip address>  'sudo shutdown -h now'"
 ```
 where of cours ipaddress and user should be replaces with the user and ip address of the youtube RPI.
 
+And In case you have some kind of shelly Plug S switch or simular and you want a gracefull shutdown, add a script like this
+```yaml
+toggle_youtube_gracefully:
+  alias: Toggle YouTube Gracefully
+  sequence:
+  - choose:
+    - conditions:
+      - condition: device
+        type: is_off
+        device_id: <DeviceId>
+        entity_id: switch.youtube
+        domain: switch
+      sequence:
+      - type: turn_on
+        device_id: <DeviceId>
+        entity_id: switch.youtube
+        domain: switch
+    default:
+    - service: shell_command.youtube_off
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 30
+        milliseconds: 0
+    - type: turn_off
+      device_id: <DeviceId>
+      entity_id: switch.youtube
+      domain: switch
+  mode: single
+  icon: mdi:youtube
+
+```
