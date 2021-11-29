@@ -48,7 +48,7 @@ class YouTubeRemoteControl extends LitElement {
 <!-- ################################# DIRECTION PAD END ################################# -->
 
                   <div class="grid-container-volume-channel-control" >
-                      <paper-input class="btn-flat flat-high ripple" style="margin-top: 0px; height: 50%;border: 2px solid white;" placeholder="Search2..." @keydown="${() => this._remote_key_press("p")}"></paper-input>
+                      <paper-input id="keypadinput" class="btn-flat flat-high ripple" style="margin-top: 0px; height: 50%;border: 2px solid white;" placeholder="Search..." @keydown="${() => this._sendKey("p")}"></paper-input>
                   </div>
 
 <!-- ################################# MEDIA CONTROL ################################# -->
@@ -66,7 +66,7 @@ class YouTubeRemoteControl extends LitElement {
 
     _sendKey(e) {
         // var key = String.fromCharCode(e.which).toLowerCase();
-        // document.getElementById("keypadinput").value = "";
+        document.getElementById("keypadinput").value = "";
         var key = "k"
         this._remote_key_press(key);
     }
