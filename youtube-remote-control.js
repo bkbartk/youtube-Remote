@@ -48,7 +48,7 @@ class YouTubeRemoteControl extends LitElement {
 <!-- ################################# DIRECTION PAD END ################################# -->
 
                   <div class="grid-container-volume-channel-control" >
-                      <paper-input name="searchinput" class="btn-flat flat-high ripple" style="margin-top: 0px; height: 50%;border: 2px solid white;" placeholder="Search2..." @keydown="${(event) => this._send_key(event)}"></paper-input>
+                      <paper-input name="searchinput" class="btn-flat flat-high ripple" style="margin-top: 0px; height: 50%;border: 2px solid white;" placeholder="Search..." @keydown="${(event,this) => this._send_key(event,this)}"></paper-input>
                   </div>
 
 <!-- ################################# MEDIA CONTROL ################################# -->
@@ -64,7 +64,8 @@ class YouTubeRemoteControl extends LitElement {
             `;
     }
 
-    _send_key(e) {
+    _send_key(e,t) {
+        t.value = "";
         var key = String.fromCharCode(e.which).toLowerCase();
         this.hass.callService("shell_command", "youtube_key", {
             key: key
