@@ -68,17 +68,11 @@ class YouTubeRemoteControl extends LitElement {
         e.preventDefault();
         var key = e.key;
         switch(key) {
-            case " ":
-                key = "space";
-              break;
             case "Enter":
                 key = "Retrun";
             case "Backspace":
                 key = "BackSpace";
-            case "Backspace":
-                key = "BackSpace";
-            case "Backspace":
-                key = "BackSpace";
+            case " ":
             case "'":
             case "$":
             case "#":
