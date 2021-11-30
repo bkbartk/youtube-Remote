@@ -65,7 +65,42 @@ class YouTubeRemoteControl extends LitElement {
     }
 
     _send_key(e) {
-        var key = String.fromCharCode(e.which).toLowerCase();
+        e.preventDefault();
+        var key = e.key;
+        switch(key) {
+            case " ":
+                key = "space";
+              break;
+            case "Enter":
+                key = "Retrun";
+            case "Backspace":
+                key = "BackSpace";
+            case "Backspace":
+                key = "BackSpace";
+            case "Backspace":
+                key = "BackSpace";
+            case "'":
+            case "$":
+            case "#":
+            case "(":
+            case ")":
+            case "@":
+            case "!":
+            case "?":
+            case ":":
+            case ".":
+            case "-":
+            case "_":
+            case "\"":
+            case "/":
+            case "$":
+            case "%":
+            case "+":
+            case "[":
+            case "]":
+                key = "type $'" + key + "'"  ; 
+              break;
+          } 
         this.hass.callService("shell_command", "youtube_key", {
             key: key
         });
