@@ -56,7 +56,7 @@ class YouTubeRemoteControl extends LitElement {
                       <button class="btn ripple" Style="color:${volumeStateObj.attributes.is_volume_muted === true ? 'red' : ''}; height: 100%;"" @click=${() => this._volume_button("MUTE")}><span class="${volumeStateObj.attributes.is_volume_muted === true ? 'blink' : ''}"><ha-icon icon="mdi:volume-mute"></span></button>
                       <button class="btn" style="border-radius: 0px; cursor: default; margin: 0px auto 0px auto; height: 100%;"><ha-icon icon="mdi:parking"/></button>
                       <button class="btn ripple" style="border-radius: 0px 0px 50% 50%;  margin: 0px auto 0px auto; height: 100%;" @click=${() => this._volume_media_player_service("volume_down")}><ha-icon icon="mdi:minus"/></button>
-                      <paper-input class="btn-flat flat-low ripple" style="padding-top: 0px; border: 2px solid white;" placeholder="Search..." @keydown="${(event) => this._send_key(event)}"></paper-input>
+                      <paper-input class="btn-flat flat-low ripple" style="padding-left:7px;height:45px;width:70px;border: 2px solid white;" placeholder="Search..." @keydown="${(event) => this._send_key(event)}"></paper-input>
                       <button class="btn ripple" style="border-radius: 0px 0px 50% 50%;  margin: 0px auto 0px auto; height: 100%;"  @click=${() => this._remote_key_press("Down")}><ha-icon icon="mdi:chevron-down"/></button>    
                   
                   </div>
@@ -617,11 +617,6 @@ class YouTubeRemoteControl extends LitElement {
            height:100%;
            font-size: calc(var(--remotewidth) / 16.6);
            // border: solid 2px var(--backgroundcolor
-      }
-
-      input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-        color: white;
-        opacity: 1; /* Firefox */
       }
       
   `;
